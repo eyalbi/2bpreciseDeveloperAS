@@ -1,32 +1,22 @@
-import time
 
-from flask.globals import session
 from models import User,Task,Report
 import os
-from boto.s3.connection import S3Connection, Bucket, Key
-import smtplib
-from email.message import EmailMessage
-import PyPDF2
+
 from datetime import datetime
-from pdf_mail import sendpdf 
-# import schedule
-from datetime import date
-import boto3
-import boto
-import boto.s3.connection
-from flask import Flask, config, current_app, flash, Response, request, render_template_string, render_template, jsonify, redirect, url_for
+
+from flask import Flask, current_app, flash, request, render_template, redirect, url_for
 from flask_mongoengine import MongoEngine
-from bson.objectid import ObjectId
+
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
-from flask_principal import Principal, Permission, RoleNeed, identity_changed, identity_loaded, Identity, AnonymousIdentity, UserNeed
+from flask_principal import Principal, RoleNeed, identity_changed, identity_loaded, Identity, AnonymousIdentity, UserNeed
 
 from forms import LoginForm, RegistrationForm
-from models import ROLES
-import atexit
 
-from apscheduler.schedulers.background import BackgroundScheduler
 
-from flask_dropzone import Dropzone
+
+
+
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 access_key = '**********************'
 secret_key = '######################'
