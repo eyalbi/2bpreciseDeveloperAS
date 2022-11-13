@@ -1,0 +1,31 @@
+{% extends "home.html" %}
+{% block content %}
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Position</th>
+      <th scope="col">Employee Details</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for employee in employeesList%}
+    <tr>
+      <td>{{employee.first_name}}</td>
+      <td>{{employee.last_name}}</td>
+      <td>{{employee.role}}</td>
+      <td><form action="{{url_for ('Employee_details') }}" method="POST">
+            <input type="hidden" id = "username" name= "username" value="{{employee.username}}">
+            <input type="submit" value="View" >
+          </form>
+      </td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock %}

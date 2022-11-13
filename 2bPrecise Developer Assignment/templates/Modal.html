@@ -1,0 +1,75 @@
+{% extends "home.html" %}
+{% block content %}
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        {% if taskFlag %}
+          <h5 class="modal-title" id="exampleModalLabel">Assign Task</h5>
+        {% else %}
+          <h5 class="modal-title" id="exampleModalLabel">New Report</h5>
+        {% endif %}
+        <button type="submit" form ="cancelModal" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% if taskFlag %}
+          <form action="{{url_for ('create_task') }}" id ="CreateTaskForm" method="POST">
+            <input type="hidden" id = "taskEmployee" name= "taskUser" value="{{employee}}">
+            <input type="hidden" id = "taskManager" name= "taskManager" value="{{manager}}">
+            <div class="form-group">
+              <input type="date" id ="datePickerId" name = "due_date"/>
+            </div>
+            <div class="form-group">
+              <label for="task-text" class="col-form-label">Task Text:</label>
+              <textarea class="form-control" id="task-text" name="taskText"></textarea>
+            </div>
+          </form>
+        {% else %}
+          <form id ="CreateReportForm" action="{{url_for ('create_report') }}" method="POST">
+            <input type="hidden" id = "reportEmployee" name= "reportUser" value="{{employee}}">
+            <input type="hidden" id = "reportManager" name= "reportManager" value="{{manager}}">
+            <div class="form-group">
+              <label for="report-text" class="col-form-label">Report Text:</label>
+              <textarea class="form-control" id="report-text" name="ReportText"></textarea>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+
+        {% if taskFlag %}
+          <form id="cancelModal" action="{{url_for ('Employee_details') }}" method="POST">
+            <input type="hidden" id = "manager" name= "username" value="{{manager}}">
+            <button type="submit" class="btn btn-secondary" >Close</button>
+          </form>
+          <button type="submit" form="CreateTaskForm" class="btn btn-primary">Assign Task</button>
+        {% else %}
+           <form id="cancelModal" action="{{url_for ('Employee_details') }}" method="POST">
+            <input type="hidden" id = "employee" name= "username" value="{{employee}}">
+            <button type="submit" class="btn btn-secondary" >Close</button>
+          </form>
+          <button type="submit" form="CreateReportForm" class="btn btn-primary">Save Report</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block script%}
+<script>
+$(document).ready(function(){
+  console.log("window is loaded")
+ $("#exampleModal").modal("show")
+}
+)
+</script>
+<script>
+$(document).ready(function(){
+(#datePickerId).min = new Date().toLocaleDateString('en-ca')
+})
+</script>
+{% endblock %}
+

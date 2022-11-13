@@ -1,0 +1,68 @@
+
+{% extends "home.html" %}
+{% block content %}
+<img src="{{ employee.avatar }}" height="200px" width="190px" style="float: center; margin-left: 30px; display: inline-block">
+{%set employeeName = employee.first_name + " "  + employee.last_name%}
+{%set managerName = manager.first_name + " "  + manager.last_name%}
+{% set employeeUserName = employee.username %}
+{% set managerUserName = manager.username %}
+
+<div style="display: inline-block; margin-left : 100px">
+    <div style="margin-bottom: 40px; margin-left : 100px"> <label > <strong> Name:</strong> </label> <strong>{{employeeName}}</strong></div>
+    <div style="margin-bottom: 40px; margin-left : 100px"> <label > <strong> Position:</strong> </label> <strong>{{employee.role}}</strong></div>
+    <div style="margin-bottom: 40px; margin-left : 100px"> <label > <strong> Manager:</strong> </label> <strong>{{managerName}}</strong>
+            <form action="{{url_for ('Report_Modal') }}" method="POST">
+                <input type="hidden" id = "reportEmployee" name= "reportUser" value = "{{employeeUserName}}">
+                <input type="hidden" id = "reportManager" name= "reportManager" value="{{managerUserName}}">
+                <input style="margin-top: 40px;" type="submit" class="btn btn-secondary" value="Report" >
+            </form>
+    </div>
+</div>
+<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Task text</th>
+      <th scope="col">Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for task in myTasks%}
+  <tr>
+      <td><strong>{{task.task_text}}</strong></td>
+      <td>{{task.due_date}}</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Create Task</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for employee in myEmployees %}
+    <tr>
+      <td>{{employee.first_name}}</td>
+      <td>{{employee.last_name}}</td>
+      <td>
+          <form action="{{url_for ('assign_task') }}" method="POST">
+            <input type="hidden" id = "TaskManager" name= "TaskManager" value="{{manager.username}}">
+            <input type="hidden" id ="TaskUser" name="TaskUser" value="{{employee.username}}">
+            <input type="submit" value="Assign Task" >
+          </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}
+
